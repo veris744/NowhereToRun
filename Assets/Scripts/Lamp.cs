@@ -19,24 +19,7 @@ public class Lamp : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (light.activeSelf)
-        {
-            playerScript.ShowMessage("Turn off lamp");
-
-        } else
-        {
-            playerScript.ShowMessage("Turn on lamp");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        playerScript.HideInfoPanel();
-    }
-
-    private void OnTriggerStay(Collider other)
+    private void OnPointerEnter()
     {
         if (light.activeSelf)
         {
@@ -47,17 +30,28 @@ public class Lamp : MonoBehaviour
         {
             playerScript.ShowMessage("Turn on lamp");
         }
+    }
+
+    private void OnPointerExit()
+    {
+        playerScript.HideInfoPanel();
+    }
+    
+    private void OnPointerPressed()
+    {
 
         if (Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             if (light.activeSelf)
             {
                 light.SetActive(false);
+                playerScript.ShowMessage("Turn on lamp");
 
             }
             else
             {
                 light.SetActive(true);
+                playerScript.ShowMessage("Turn off lamp");
             }
         }
     }

@@ -6,9 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private float speed = 8f;
-    private float runningSpeed = 12f;
-    private Vector3 positionPaused;
+    private float speed = 4f;
+    private float runningSpeed = 8f;
 
     private Rigidbody rb;
     public GameObject infoCanvas;
@@ -18,7 +17,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        positionPaused = transform.position;
     }
 
     // Update is called once per frame
@@ -26,7 +24,6 @@ public class Player : MonoBehaviour
     {
 
         if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f && Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
-            transform.position = positionPaused;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
@@ -41,9 +38,7 @@ public class Player : MonoBehaviour
 
     void Move(float s)
     {
-        //transform.Translate(new Vector3(s * Input.GetAxis("Horizontal") * Time.deltaTime, 0f, s * Input.GetAxis("Vertical") * Time.deltaTime), Space.Self);
-        rb.MovePosition(transform.position + new Vector3(s * Input.GetAxis("Horizontal"), 0f, s * Input.GetAxis("Vertical")) * Time.deltaTime);
-        positionPaused = transform.position;
+        rb.velocity = new Vector3(s * Input.GetAxis("Horizontal"), 0f, s * Input.GetAxis("Vertical"));
     }
 
     public void ShowMessage(string message)
