@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Lamp : MonoBehaviour
 {
     public GameObject light;
     private Player playerScript;
+    public TextMeshProUGUI infoCanvasText;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerScript = GameObject.Find("XRRig").GetComponent<Player>();
+        playerScript = GameObject.Find("Main Camera").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -30,6 +32,7 @@ public class Lamp : MonoBehaviour
         {
             playerScript.ShowMessage("Turn on lamp");
         }
+        Debug.Log("OnPointerEnter");
     }
 
     private void OnPointerExit()
@@ -39,20 +42,16 @@ public class Lamp : MonoBehaviour
     
     private void OnPointerPressed()
     {
-
-        if (Input.GetKeyDown(KeyCode.JoystickButton1))
+        if (light.activeSelf)
         {
-            if (light.activeSelf)
-            {
-                light.SetActive(false);
-                playerScript.ShowMessage("Turn on lamp");
+            light.SetActive(false);
+            playerScript.ShowMessage("Turn on lamp");
 
-            }
-            else
-            {
-                light.SetActive(true);
-                playerScript.ShowMessage("Turn off lamp");
-            }
+        }
+        else
+        {
+            light.SetActive(true);
+            playerScript.ShowMessage("Turn off lamp");
         }
     }
 }

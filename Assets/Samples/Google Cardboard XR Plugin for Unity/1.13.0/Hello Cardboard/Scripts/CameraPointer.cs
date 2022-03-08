@@ -58,8 +58,8 @@ public class CameraPointer : MonoBehaviour
         {
             _gazedAtObject?.SendMessage("OnPointerClick");
         }
-
-        if (Input.GetKeyDown(KeyCode.JoystickButton1))
+        
+        if (Input.GetKeyUp(KeyCode.JoystickButton1))
         {
             _gazedAtObject?.SendMessage("OnPointerPressed");
         }

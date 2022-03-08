@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
 
     void Move(float s)
     {
-        rb.velocity = new Vector3(s * Input.GetAxis("Horizontal"), 0f, s * Input.GetAxis("Vertical"));
+        rb.velocity = s * Input.GetAxis("Horizontal") * transform.right + s * Input.GetAxis("Vertical") * transform.forward;
     }
 
     public void ShowMessage(string message)
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
 
     public void HideInfoPanel()
     {
+        infoMessage.text = "";
         infoCanvas.SetActive(false);
     }
 }
