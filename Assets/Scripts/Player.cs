@@ -9,14 +9,18 @@ public class Player : MonoBehaviour
     private float speed = 4f;
     private float runningSpeed = 8f;
 
+    private Animator avatarAnim;
     private Rigidbody rb;
-    public GameObject infoCanvas;
+    private GameManager gameManager;
+    public GameObject panel;
     public TextMeshProUGUI infoMessage;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        avatarAnim = GameObject.Find("Avatar").GetComponent<Animator>();
     }
 
 
@@ -24,16 +28,19 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f && Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
+        if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f && Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f || gameManager.pause) {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            avatarAnim.Play("idle");
         }
-        else if (Input.GetKey(KeyCode.JoystickButton0))
+        else if (Input.GetKey(KeyCode.JoystickButton1))
         {
             Move(runningSpeed);
+            avatarAnim.Play("running");
         } else
         {
             Move(speed);
+            avatarAnim.Play("walking");
         }
     }
 
@@ -44,13 +51,13 @@ public class Player : MonoBehaviour
 
     public void ShowMessage(string message)
     {
-        infoCanvas.SetActive(true);
+        panel.SetActive(true);
         infoMessage.text = message;
     }
 
     public void HideInfoPanel()
     {
         infoMessage.text = "";
-        infoCanvas.SetActive(false);
+        panel.SetActive(false);
     }
 }

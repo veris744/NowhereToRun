@@ -24,7 +24,7 @@ using UnityEngine;
 /// </summary>
 public class CameraPointer : MonoBehaviour
 {
-    private const float _maxDistance = 7;
+    private const float _maxDistance = 6;
     private GameObject _gazedAtObject = null;
 
     /// <summary>
@@ -45,6 +45,10 @@ public class CameraPointer : MonoBehaviour
                 _gazedAtObject = hit.transform.gameObject;
                 _gazedAtObject.SendMessage("OnPointerEnter");
             }
+            if (Input.GetKeyUp(KeyCode.JoystickButton0) || Input.GetKeyUp(KeyCode.Space))
+            {
+                _gazedAtObject?.SendMessage("OnPointerPressed");
+            }
         }
         else
         {
@@ -56,12 +60,9 @@ public class CameraPointer : MonoBehaviour
         // Checks for screen touches.
         if (Google.XR.Cardboard.Api.IsTriggerPressed)
         {
-            _gazedAtObject?.SendMessage("OnPointerClick");
+            _gazedAtObject?.SendMessage("OnPointerClick", SendMessageOptions.DontRequireReceiver);
         }
         
-        if (Input.GetKeyUp(KeyCode.JoystickButton1))
-        {
-            _gazedAtObject?.SendMessage("OnPointerPressed");
-        }
+        
     }
 }
