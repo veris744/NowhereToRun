@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class Lamp : MonoBehaviour
 {
+    private bool counter;
+
     public GameObject light;
     private Player playerScript;
-    public TextMeshProUGUI infoCanvasText;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerScript = GameObject.Find("Main Camera").GetComponent<Player>();
+        playerScript = GameObject.Find("Player").GetComponent<Player>();
+        counter = false;
     }
 
     // Update is called once per frame
@@ -25,14 +27,13 @@ public class Lamp : MonoBehaviour
     {
         if (light.activeSelf)
         {
-            playerScript.ShowMessage("Turn off lamp");
+            playerScript.ShowMessage("Press A to turn off lamp");
 
         }
         else
         {
-            playerScript.ShowMessage("Turn on lamp");
+            playerScript.ShowMessage("Press A to turn on lamp");
         }
-        Debug.Log("OnPointerEnter");
     }
 
     private void OnPointerExit()
@@ -45,13 +46,28 @@ public class Lamp : MonoBehaviour
         if (light.activeSelf)
         {
             light.SetActive(false);
-            playerScript.ShowMessage("Turn on lamp");
+            playerScript.ShowMessage("Press A to turn on lamp");
+            if (counter)
+            {
+                StopCoroutine(Waiting());
+                counter = false;
+                if (playerScript.panel.activeSelf)
+                    playerScript.ShowMessage("Press A to turn on lamp");
+            }
 
         }
         else
         {
             light.SetActive(true);
-            playerScript.ShowMessage("Turn off lamp");
+            playerScript.ShowMessage("Press A to turn off lamp");
+            StartCoroutine(Waiting());
         }
+    }
+
+    public IEnumerator Waiting()
+    {
+        counter = true;
+        yield return new WaitForSeconds(15);
+        light.SetActive(false);
     }
 }
