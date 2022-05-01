@@ -66,8 +66,8 @@ public class BasicObject : MonoBehaviour
                 gameManager.key3 = true;
 
             key = false;
-            gameManager.keyCount += 1;
 
+            gameManager.KeyFound();
         }
         else
             playerScript.ShowMessage("You found nothing");
