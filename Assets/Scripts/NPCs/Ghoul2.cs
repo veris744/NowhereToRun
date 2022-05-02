@@ -15,6 +15,8 @@ public class Ghoul2 : MonoBehaviour
     private Vector3 position3 = new Vector3(66.3f, 0, 8.3f);
     private Vector3 position4 = new Vector3(84.8f, 0, -17.9f);
 
+    private Vector3 destination;
+
     private bool waiting;
     private float distance2Run = 18;
 
@@ -27,40 +29,54 @@ public class Ghoul2 : MonoBehaviour
         ghoulAnim = GetComponent<Animation>();
         waiting = true;
 
-
-        transform.position = SetWaitingPosition();
+        destination = SetWaitingPosition();
+        transform.position = destination;
+        ghoulAgent.Warp(transform.position);
+        ghoulAnim.Play("Idle");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
+        if (gameManager.pause)
         {
-            waiting = false;
-            ghoulAgent.isStopped = false;
-            ghoulAgent.SetDestination(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
-            ghoulAnim.Play("Walk");
-
-            if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial)
-            {
-                TryToOpenDoor(gameManager.keyCount);
-            }
+            ghoulAgent.isStopped = true;
+            ghoulAnim.Play("Idle");
         }
         else
         {
-            if (!waiting)
+            if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
             {
+                waiting = false;
                 ghoulAgent.isStopped = false;
-                ghoulAgent.SetDestination(SetWaitingPosition());
+                ghoulAgent.SetDestination(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
                 ghoulAnim.Play("Walk");
-                waiting = true;
+
+                if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    TryToOpenDoor(gameManager.keyCount);
+                }
             }
-            if (ghoulAgent.remainingDistance != Mathf.Infinity && ghoulAgent.pathStatus == NavMeshPathStatus.PathComplete && ghoulAgent.remainingDistance == 0)
+            else
             {
-                ghoulAgent.isStopped = true;
-                ghoulAnim.Play("Idle");
+                if (!waiting)
+                {
+                    ghoulAgent.isStopped = false;
+                    destination = SetWaitingPosition();
+                    ghoulAnim.Play("Walk");
+                    waiting = true;
+                }
+
+                ghoulAgent.SetDestination(destination);
+                if (Vector3.Distance(destination, transform.position) < 0.5 &&
+                    ghoulAgent.remainingDistance != Mathf.Infinity && ghoulAgent.pathStatus == NavMeshPathStatus.PathComplete && ghoulAgent.remainingDistance == 0)
+                {
+                    ghoulAgent.isStopped = true;
+                    ghoulAnim.Play("Idle");
+                }
             }
         }
+        
     }
 
     Vector3 SetWaitingPosition()
@@ -81,14 +97,6 @@ public class Ghoul2 : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            gameManager.GameOver();
-        }
-    }
 
 
     public GameObject FindClosestDoor()

@@ -115,13 +115,21 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("Game Over");
+        canvas.GetComponent<RectTransform>().localPosition = player.transform.position + player.transform.forward * 1;
+        canvas.GetComponent<RectTransform>().localRotation = player.transform.localRotation;
+        text.text = "GAME OVER";
+        canvas.SetActive(true);
+        playButton.SetActive(true);
+        resumeButton.SetActive(false);
+        goToMenuButton.SetActive(true);
+        pause = true;
+        finished = true;
     }
 
     private void SpawnMonster()
     {
-        string monster = monsters[Random.Range(0, monsters.Count)];
+        string monster = monsters[Random.Range(0, monsters.Count - 1)];
         monsters.Remove(monster);
-        GameObject.Instantiate(Resources.Load(monster), new Vector3(0, -100, 0), Quaternion.identity);
+        GameObject.Instantiate(Resources.Load(monster), new Vector3(0, -100, 0), Quaternion.identity, GameObject.Find("NavMesh").transform);
     }
 }

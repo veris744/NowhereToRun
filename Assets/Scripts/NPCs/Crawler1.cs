@@ -14,6 +14,8 @@ public class Crawler1 : MonoBehaviour
     private Vector3 position2 = new Vector3(-14.1f, -14.9f, 6.05f);
     private Vector3 position3 = new Vector3(-2.41f, -14.9f, -16.36f);
 
+    private Vector3 destination;
+
     private bool waiting;
     private float distance2Run = 13;
 
@@ -27,39 +29,54 @@ public class Crawler1 : MonoBehaviour
         waiting = true;
 
 
-        transform.position = SetWaitingPosition();
+        destination = SetWaitingPosition();
+        transform.position = destination;
+        crawlerAgent.Warp(transform.position);
+        crawlerAnim.Play("Idle");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
+        if (gameManager.pause)
         {
-            waiting = false;
-            crawlerAgent.isStopped = false;
-            crawlerAgent.SetDestination(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
-            crawlerAnim.Play("crawl");
-
-            if (crawlerAgent.pathStatus == NavMeshPathStatus.PathPartial)
-            {
-                TryToOpenDoor(gameManager.keyCount);
-            }
+            crawlerAgent.isStopped = true;
+            crawlerAnim.Play("Idle");
         }
         else
         {
-            if (!waiting)
+            if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
             {
+                waiting = false;
                 crawlerAgent.isStopped = false;
-                crawlerAgent.SetDestination(SetWaitingPosition());
+                crawlerAgent.SetDestination(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
                 crawlerAnim.Play("crawl");
-                waiting = true;
+
+                if (crawlerAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    TryToOpenDoor(gameManager.keyCount);
+                }
             }
-            if (crawlerAgent.remainingDistance != Mathf.Infinity && crawlerAgent.pathStatus == NavMeshPathStatus.PathComplete && crawlerAgent.remainingDistance == 0)
+            else
             {
-                crawlerAgent.isStopped = true;
-                crawlerAnim.Play("Idle");
+                if (!waiting)
+                {
+                    crawlerAgent.isStopped = false;
+                    destination = SetWaitingPosition();
+                    crawlerAnim.Play("Walk");
+                    waiting = true;
+                }
+
+                crawlerAgent.SetDestination(destination);
+                if (Vector3.Distance(destination, transform.position) < 0.5 &&
+                    crawlerAgent.remainingDistance != Mathf.Infinity && crawlerAgent.pathStatus == NavMeshPathStatus.PathComplete && crawlerAgent.remainingDistance == 0)
+                {
+                    crawlerAgent.isStopped = true;
+                    crawlerAnim.Play("Idle");
+                }
             }
         }
+        
     }
 
     Vector3 SetWaitingPosition()
@@ -77,13 +94,6 @@ public class Crawler1 : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            gameManager.GameOver();
-        }
-    }
 
 
     public GameObject FindClosestDoor()
