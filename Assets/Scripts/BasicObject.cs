@@ -6,17 +6,17 @@ using UnityEngine;
 public class BasicObject : MonoBehaviour
 {
     public bool key;
-    private bool looking;
 
     private Player playerScript;
     private GameManager gameManager;
+    private AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<Player>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        looking = false;
+        audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -36,9 +36,9 @@ public class BasicObject : MonoBehaviour
 
     private void OnPointerExit()
     {
-        if (looking)
-            StopCoroutine(Looking());
-        
+        StopCoroutine(Looking());
+        audioManager.StopPlaying();
+        playerScript.HideInfoPanel();
         playerScript.HideInfoPanel();
     }
 
@@ -50,8 +50,12 @@ public class BasicObject : MonoBehaviour
 
     public IEnumerator Looking()
     {
-        looking = true;
         playerScript.ShowMessage("Looking...");
+
+        if (gameObject.name.Contains("Bush"))
+            audioManager.LookingThroughBush();
+        else
+            audioManager.Searching();
 
         yield return new WaitForSeconds(5);
 
@@ -72,10 +76,6 @@ public class BasicObject : MonoBehaviour
         else
             playerScript.ShowMessage("You found nothing");
 
-        yield return new WaitForSeconds(5);
-        playerScript.HideInfoPanel();
-
-        looking = false;
     }
 
 }

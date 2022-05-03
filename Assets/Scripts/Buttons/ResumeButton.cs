@@ -7,13 +7,15 @@ public class ResumeButton : MonoBehaviour
 {
     private GameManager gameManager;
     public GameObject buttonText;
+    private AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
+        Debug.Log(audioManager.name);
     }
-
 
     private void OnPointerEnter()
     {
@@ -27,6 +29,7 @@ public class ResumeButton : MonoBehaviour
 
     private void OnPointerPressed()
     {
+        audioManager.clickButton();
         gameManager.canvas.SetActive(false);
         gameManager.pause = false;
     }

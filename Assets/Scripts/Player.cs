@@ -9,9 +9,14 @@ public class Player : MonoBehaviour
     private float speed = 4f;
     private float runningSpeed = 8f;
 
+    private bool playingRunAudio;
+    private bool playingWalkAudio;
+
     private Animator avatarAnim;
     private Rigidbody rb;
+    private AudioSource audioSource;
     private GameManager gameManager;
+    private AudioManager audioManager;
     public GameObject panel;
     public TextMeshProUGUI infoMessage;
 
@@ -21,6 +26,10 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         avatarAnim = GameObject.Find("Avatar").GetComponent<Animator>();
+        audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
+        audioSource = GetComponent<AudioSource>();
+        playingRunAudio = false;
+        playingWalkAudio = false;
     }
 
 
@@ -32,15 +41,30 @@ public class Player : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             avatarAnim.Play("idle");
+            audioSource.Stop();
+            playingRunAudio = false;
+            playingWalkAudio = false;
         }
         else if (Input.GetKey(KeyCode.JoystickButton1))
         {
             Move(runningSpeed);
             avatarAnim.Play("running");
+            if (!playingRunAudio)
+            {
+                playingRunAudio = true;
+                playingWalkAudio = false;
+                PlayAudio("Audio/Footsteps_Run");
+            }
         } else
         {
             Move(speed);
             avatarAnim.Play("walking");
+            if (!playingWalkAudio)
+            {
+                playingRunAudio = false;
+                playingWalkAudio = true;
+                PlayAudio("Audio/Footsteps_Walk");
+            }
         }
     }
 
@@ -61,6 +85,12 @@ public class Player : MonoBehaviour
         panel.SetActive(false);
     }
 
+    private void PlayAudio(string audio)
+    {
+        audioSource.clip = Resources.Load<AudioClip>(audio);
+        audioSource.Play();
+    }
+
 
 
     private void OnTriggerEnter(Collider other)
@@ -68,6 +98,10 @@ public class Player : MonoBehaviour
         if (other.tag == "NPC")
         {
             gameManager.GameOver();
+        }
+        else if (other.tag == "Creaking")
+        {
+            audioManager.Creaking();
         }
     }
 }

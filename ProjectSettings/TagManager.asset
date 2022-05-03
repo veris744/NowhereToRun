@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Door
   - NPC
+  - Creaking
   layers:
   - Default
   - TransparentFX

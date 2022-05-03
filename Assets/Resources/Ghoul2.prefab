@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 1913762323291410699}
   - component: {fileID: 1913762323291410698}
   - component: {fileID: 1913762323291410743}
+  - component: {fileID: -5892302101789247899}
   m_Layer: 3
   m_Name: Ghoul2
   m_TagString: NPC
@@ -296,6 +297,138 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2536697, y: 3.4830718, z: 1.6430724}
   m_Center: {x: -0.052635193, y: 1.7799795, z: 0.39129508}
+--- !u!82 &-5892302101789247899
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913762323291410696}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 9af83833cdc29f849b86efc8ce17fa58, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.002
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.06
+      value: 1
+      inSlope: -0.33451605
+      outSlope: -0.33451605
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2
+      value: 0.5
+      inSlope: -1.0657864
+      outSlope: -1.0657864
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.46701112
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.4
+      value: 0.4
+      inSlope: -1.009933
+      outSlope: -1.009933
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.57231534
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.1
+      inSlope: -0.74990135
+      outSlope: -0.74990135
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9714464
+    - serializedVersion: 3
+      time: 0.8
+      value: 0
+      inSlope: -0.007917818
+      outSlope: -0.007917818
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.8705773
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1913762323340745843
 GameObject:
   m_ObjectHideFlags: 0
