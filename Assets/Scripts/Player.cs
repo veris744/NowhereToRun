@@ -60,4 +60,14 @@ public class Player : MonoBehaviour
         infoMessage.text = "";
         panel.SetActive(false);
     }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NPC")
+        {
+            gameManager.GameOver();
+        }
+    }
 }

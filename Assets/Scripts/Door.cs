@@ -39,15 +39,23 @@ public class Door : MonoBehaviour
     {
         if (animator.GetBool("open"))
         {
-            animator.SetBool("open", false);
+            closeDoor();
             playerScript.ShowMessage("Press A to open door");
         }
         else
         {
-            animator.SetBool("open", true);
+            openDoor();
             playerScript.ShowMessage("Press A to close door");
         }
 
     }
 
+    public void openDoor()
+    {
+        animator.SetBool("open", true);
+    }
+    public void closeDoor()
+    {
+        animator.SetBool("open", false);
+    }
 }

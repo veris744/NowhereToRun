@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int nHideoutsKey2 = 13;
     private int nHideoutsKey3 = 20;
 
+    public List<string> monsters;
 
     public GameObject canvas;
     public GameObject playButton;
@@ -34,7 +35,18 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("Player");
         keyCounter = GameObject.Find("KeysCounter").GetComponent<TextMeshProUGUI>();
         if (SceneManager.GetActiveScene().name == "GameScene")
+        {
             SpawnKeys();
+
+            monsters.Add("Ghoul1");
+            monsters.Add("Ghoul2");
+            monsters.Add("Ghoul3");
+            monsters.Add("Crawler1");
+            monsters.Add("Crawler2");
+
+            SpawnMonster();
+            SpawnMonster();
+        }
     }
 
     // Update is called once per frame
@@ -62,6 +74,12 @@ public class GameManager : MonoBehaviour
 
 
         keyCounter.text = keyCount + "/3";
+    }
+
+    public void KeyFound()
+    {
+        keyCount += 1;
+        SpawnMonster();
     }
 
     void SpawnKeys()
@@ -93,5 +111,25 @@ public class GameManager : MonoBehaviour
         goToMenuButton.SetActive(true);
         pause = true;
         finished = true;
+    }
+
+    public void GameOver()
+    {
+        canvas.GetComponent<RectTransform>().localPosition = player.transform.position + player.transform.forward * 1;
+        canvas.GetComponent<RectTransform>().localRotation = player.transform.localRotation;
+        text.text = "GAME OVER";
+        canvas.SetActive(true);
+        playButton.SetActive(true);
+        resumeButton.SetActive(false);
+        goToMenuButton.SetActive(true);
+        pause = true;
+        finished = true;
+    }
+
+    private void SpawnMonster()
+    {
+        string monster = monsters[Random.Range(0, monsters.Count - 1)];
+        monsters.Remove(monster);
+        GameObject.Instantiate(Resources.Load(monster), new Vector3(0, -100, 0), Quaternion.identity, GameObject.Find("NavMesh").transform);
     }
 }
