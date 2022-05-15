@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         pause = false;
         finished = false;
         player = GameObject.Find("Player");
@@ -52,9 +53,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Joystick1Button7)||Input.GetKeyUp(KeyCode.Escape) && !finished 
-            && SceneManager.GetActiveScene().name == "GameScene")
+        if (Input.GetKeyUp(KeyCode.JoystickButton10) && !finished && SceneManager.GetActiveScene().name == "GameScene")
         {
+            Debug.Log("Start pressed");
             if (canvas.activeSelf)
             {
                 canvas.SetActive(false);
@@ -89,14 +90,14 @@ public class GameManager : MonoBehaviour
         key3 = false;
         keyCount = 0;
 
-        int randomInt = Random.Range(1, nHideoutsKey1);
+        int randomInt = Random.Range(1, nHideoutsKey1+1);
         GameObject.Find("cardboardBox " + randomInt).GetComponent<BasicObject>().key = true;
 
 
-        randomInt = Random.Range(1, nHideoutsKey2);
+        randomInt = Random.Range(1, nHideoutsKey2+1);
         GameObject.Find("Bush " + randomInt).GetComponent<BasicObject>().key = true;
 
-        randomInt = Random.Range(1, nHideoutsKey3);
+        randomInt = Random.Range(1, nHideoutsKey3+1);
         GameObject.Find("Hideout " + randomInt).GetComponent<BasicObject>().key = true;
     }
 
@@ -128,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnMonster()
     {
-        string monster = monsters[Random.Range(0, monsters.Count - 1)];
+        string monster = monsters[Random.Range(0, monsters.Count)];
         monsters.Remove(monster);
         GameObject.Instantiate(Resources.Load(monster), new Vector3(0, -100, 0), Quaternion.identity, GameObject.Find("NavMesh").transform);
     }

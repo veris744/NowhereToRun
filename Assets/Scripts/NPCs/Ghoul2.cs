@@ -18,7 +18,7 @@ public class Ghoul2 : MonoBehaviour
     private Vector3 destination;
 
     private bool waiting;
-    private float distance2Run = 18;
+    private float distance2Run = 20;
 
     // Start is called before the first frame update
     void Start()
@@ -38,27 +38,35 @@ public class Ghoul2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //se comprueba si el juego está en pausa
         if (gameManager.pause)
         {
-            ghoulAgent.isStopped = true;
-            ghoulAnim.Play("Idle");
+            ghoulAgent.isStopped = true;    //el NPC se detiene
+            ghoulAnim.Play("Idle");         //animación a reproducir
         }
         else
         {
+            //se comprueba si el jugador está en rango
             if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
             {
-                waiting = false;
-                ghoulAgent.isStopped = false;
-                ghoulAgent.SetDestination(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
-                ghoulAnim.Play("Walk");
-
-                if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                //se comprueba si el destino es alcanzable
+                if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial & waiting)
                 {
                     TryToOpenDoor(gameManager.keyCount);
                 }
+
+                waiting = false;                //el NPC deja de estar en espera
+                ghoulAgent.isStopped = false;   //el NPC está en movimiento
+
+                //el jugador es el objetivo del NPC
+                ghoulAgent.SetDestination(new Vector3(player.transform.position.x,
+                    this.transform.position.y, player.transform.position.z));
+
+                ghoulAnim.Play("Walk");         //animación a reproducir
             }
             else
             {
+                //se determina 1 vez una posición aleatoria
                 if (!waiting)
                 {
                     ghoulAgent.isStopped = false;
@@ -68,20 +76,28 @@ public class Ghoul2 : MonoBehaviour
                 }
 
                 ghoulAgent.SetDestination(destination);
+
+                //se comprueba si la posición es alcanzable
+                if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                    destination = SetWaitingPosition(); //se define nueva posición
+
+                //se comprueba si el NPC ha alcanzado el objetivo
                 if (Vector3.Distance(destination, transform.position) < 0.5 &&
-                    ghoulAgent.remainingDistance != Mathf.Infinity && ghoulAgent.pathStatus == NavMeshPathStatus.PathComplete && ghoulAgent.remainingDistance == 0)
+                    ghoulAgent.remainingDistance != Mathf.Infinity &&
+                    ghoulAgent.pathStatus == NavMeshPathStatus.PathComplete &&
+                    ghoulAgent.remainingDistance == 0)
                 {
-                    ghoulAgent.isStopped = true;
-                    ghoulAnim.Play("Idle");
+                    ghoulAgent.isStopped = true;       //el NPC se detiene
+                    ghoulAnim.Play("Idle");            //animación a reproducir
                 }
             }
         }
-        
+
     }
 
     Vector3 SetWaitingPosition()
     {
-        int n = Random.Range(1, 4);
+        int n = Random.Range(1, 5);
 
         switch (n)
         {
@@ -128,14 +144,14 @@ public class Ghoul2 : MonoBehaviour
             case 0:
                 break;
             case 1:
-                r = Random.Range(1, 3);
+                r = Random.Range(0, 3);
                 if (r == 1)
                 {
                     door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
                 }
                 break;
             case 2:
-                r = Random.Range(1, 2);
+                r = Random.Range(0, 2);
                 if (r == 1)
                 {
                     door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();

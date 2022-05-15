@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 public class StartGameButton : MonoBehaviour
 {
     public GameObject buttonText;
+    private AudioManager audioManager;
 
+    // Start is called before the first frame update
     void Start()
     {
-
+        audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
     }
-
 
     private void OnPointerEnter()
     {
@@ -26,6 +27,13 @@ public class StartGameButton : MonoBehaviour
 
     private void OnPointerPressed()
     {
+        audioManager.clickButton();
+        StartCoroutine(Loading());
+    }
+
+    public IEnumerator Loading()
+    {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("GameScene");
     }
 }

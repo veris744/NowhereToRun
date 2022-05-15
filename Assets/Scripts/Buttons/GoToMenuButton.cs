@@ -7,11 +7,12 @@ using UnityEngine.SceneManagement;
 public class GoToMenuButton : MonoBehaviour
 {
     public GameObject buttonText;
+    private AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
     }
 
 
@@ -27,6 +28,13 @@ public class GoToMenuButton : MonoBehaviour
 
     private void OnPointerPressed()
     {
+        audioManager.clickButton();
+        StartCoroutine(Loading());
+    }
+
+    public IEnumerator Loading()
+    {
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("MenuScene");
     }
 }

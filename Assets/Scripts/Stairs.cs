@@ -14,14 +14,10 @@ public class Stairs : MonoBehaviour
         playerScript = GameObject.Find("Player").GetComponent<Player>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void OnPointerEnter()
     {
+        Debug.Log("Enter");
 
         if (transform.name == "Stairs2")
             playerScript.ShowMessage("Press A to go downstairs");
@@ -41,13 +37,15 @@ public class Stairs : MonoBehaviour
     private void OnPointerPressed()
     {
         if (transform.name == "Stairs2")
-            player.transform.position = new Vector3(35, 6.75f, 18);
+            player.transform.position = new Vector3(35, 7.1f, 18);
         else if (transform.name == "Stairs1")
             player.transform.position = new Vector3(14, 21.75f, 15);
         else if (transform.name == "Stairs3")
-            player.transform.position = new Vector3(35, 6.75f, 3);
+            player.transform.position = new Vector3(35, 7.1f, 3);
         else
-            player.transform.position = new Vector3(32, -7.75f, -20);
+            player.transform.position = new Vector3(32, -8.15f, -20);
+        
+        
         playerScript.HideInfoPanel();
     }
 }

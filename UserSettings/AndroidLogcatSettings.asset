@@ -1,0 +1,119 @@
+{
+    "m_SelectedDeviceId": "RFCT326G67Y",
+    "m_SelectedPackage": {
+        "deviceId": "RFCT326G67Y",
+        "name": "com.DefaultCompany.NowhereToRun",
+        "processId": 26422,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.android.settings",
+            "processId": 6603,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 8187,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 9776,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 12323,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 14129,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 18947,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 23155,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 25168,
+            "exited": false
+        },
+        {
+            "deviceId": "RFCT326G67Y",
+            "name": "com.DefaultCompany.NowhereToRun",
+            "processId": 26422,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_Filter": "",
+    "m_FilterIsRegularExpression": false,
+    "m_SymbolPaths": []
+}
