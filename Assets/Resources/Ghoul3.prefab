@@ -1019,14 +1019,14 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.06
-      value: 1
-      inSlope: -0.33451605
-      outSlope: -0.33451605
+      time: 0.1
+      value: 0.95
+      inSlope: -1.7188383
+      outSlope: -1.7188383
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 1
     - serializedVersion: 3
       time: 0.2
       value: 0.5

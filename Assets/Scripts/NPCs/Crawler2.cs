@@ -17,7 +17,7 @@ public class Crawler2 : MonoBehaviour
     private Vector3 destination;
 
     private bool waiting;
-    private float distance2Run = 13;
+    private float distance2Run = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -38,27 +38,35 @@ public class Crawler2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //se comprueba si el juego está en pausa
         if (gameManager.pause)
         {
-            crawlerAgent.isStopped = true;
-            crawlerAnim.Play("Idle");
+            crawlerAgent.isStopped = true;    //el NPC se detiene
+            crawlerAnim.Play("Idle");         //animación a reproducir
         }
         else
         {
+            //se comprueba si el jugador está en rango
             if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
             {
-                waiting = false;
-                crawlerAgent.isStopped = false;
-                crawlerAgent.SetDestination(new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z));
-                crawlerAnim.Play("crawl");
-
-                if (crawlerAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                //se comprueba si el destino es alcanzable
+                if (crawlerAgent.pathStatus == NavMeshPathStatus.PathPartial & waiting)
                 {
                     TryToOpenDoor(gameManager.keyCount);
                 }
+
+                waiting = false;                //el NPC deja de estar en espera
+                crawlerAgent.isStopped = false;   //el NPC está en movimiento
+
+                //el jugador es el objetivo del NPC
+                crawlerAgent.SetDestination(new Vector3(player.transform.position.x,
+                    this.transform.position.y, player.transform.position.z));
+
+                crawlerAnim.Play("Walk");         //animación a reproducir
             }
             else
             {
+                //se determina 1 vez una posición aleatoria
                 if (!waiting)
                 {
                     crawlerAgent.isStopped = false;
@@ -68,15 +76,23 @@ public class Crawler2 : MonoBehaviour
                 }
 
                 crawlerAgent.SetDestination(destination);
+
+                //se comprueba si la posición es alcanzable
+                if (crawlerAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                    destination = SetWaitingPosition(); //se define nueva posición
+
+                //se comprueba si el NPC ha alcanzado el objetivo
                 if (Vector3.Distance(destination, transform.position) < 0.5 &&
-                    crawlerAgent.remainingDistance != Mathf.Infinity && crawlerAgent.pathStatus == NavMeshPathStatus.PathComplete && crawlerAgent.remainingDistance == 0)
+                    crawlerAgent.remainingDistance != Mathf.Infinity &&
+                    crawlerAgent.pathStatus == NavMeshPathStatus.PathComplete &&
+                    crawlerAgent.remainingDistance == 0)
                 {
-                    crawlerAgent.isStopped = true;
-                    crawlerAnim.Play("Idle");
+                    crawlerAgent.isStopped = true;       //el NPC se detiene
+                    crawlerAnim.Play("Idle");            //animación a reproducir
                 }
             }
         }
-        
+
     }
 
     Vector3 SetWaitingPosition()
@@ -126,14 +142,14 @@ public class Crawler2 : MonoBehaviour
             case 0:
                 break;
             case 1:
-                r = Random.Range(1, 3);
+                r = Random.Range(0, 3);
                 if (r == 1)
                 {
                     door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
                 }
                 break;
             case 2:
-                r = Random.Range(1, 2);
+                r = Random.Range(0, 2);
                 if (r == 1)
                 {
                     door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();

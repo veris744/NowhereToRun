@@ -45,7 +45,7 @@ public class CameraPointer : MonoBehaviour
                 _gazedAtObject = hit.transform.gameObject;
                 _gazedAtObject.SendMessage("OnPointerEnter");
             }
-            if (Input.GetKeyUp(KeyCode.JoystickButton0) || Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.JoystickButton0))
             {
                 _gazedAtObject?.SendMessage("OnPointerPressed");
             }

@@ -49,4 +49,11 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.Stop();
     }
+
+    public void MovePainting()
+    {
+        GameObject.Find("Painting").GetComponent<Animation>().Play();
+        audioSource.clip = Resources.Load<AudioClip>("Audio/Painting");
+        audioSource.Play();
+    }
 }

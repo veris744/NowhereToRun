@@ -39,7 +39,6 @@ public class BasicObject : MonoBehaviour
         StopCoroutine(Looking());
         audioManager.StopPlaying();
         playerScript.HideInfoPanel();
-        playerScript.HideInfoPanel();
     }
 
     private void OnPointerPressed()

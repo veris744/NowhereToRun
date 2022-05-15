@@ -14,7 +14,6 @@ public class ResumeButton : MonoBehaviour
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
-        Debug.Log(audioManager.name);
     }
 
     private void OnPointerEnter()

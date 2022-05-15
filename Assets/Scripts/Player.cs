@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
 
+
         if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f && Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f || gameManager.pause) {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -95,6 +96,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        int r;
         if (other.tag == "NPC")
         {
             gameManager.GameOver();
@@ -102,6 +104,12 @@ public class Player : MonoBehaviour
         else if (other.tag == "Creaking")
         {
             audioManager.Creaking();
+        }
+        else if (other.name == "Painting")
+        {
+            r = Random.Range(0, 3);
+            if (r == 0)
+                audioManager.MovePainting();
         }
     }
 }
