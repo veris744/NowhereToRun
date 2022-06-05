@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     public bool key3;
     public int keyCount;
 
-    private int nHideoutsKey1 = 14;
-    private int nHideoutsKey2 = 13;
-    private int nHideoutsKey3 = 20;
+    private int nHideoutsKey1 = 9;      //Cardboards
+    private int nHideoutsKey2 = 9;     //Bushes
+    private int nHideoutsKey3 = 15;     //Hideouts
 
     public List<string> monsters;
 
@@ -91,14 +91,16 @@ public class GameManager : MonoBehaviour
         keyCount = 0;
 
         int randomInt = Random.Range(1, nHideoutsKey1+1);
-        GameObject.Find("cardboardBox " + randomInt).GetComponent<BasicObject>().key = true;
-
+        GameObject.Find("cardboardBox " + randomInt)
+            .GetComponent<BasicObject>().key = true;
 
         randomInt = Random.Range(1, nHideoutsKey2+1);
-        GameObject.Find("Bush " + randomInt).GetComponent<BasicObject>().key = true;
+        GameObject.Find("Bush " + randomInt)
+            .GetComponent<BasicObject>().key = true;
 
         randomInt = Random.Range(1, nHideoutsKey3+1);
-        GameObject.Find("Hideout " + randomInt).GetComponent<BasicObject>().key = true;
+        GameObject.Find("Hideout " + randomInt)
+            .GetComponent<BasicObject>().key = true;
     }
 
     public void Winning()

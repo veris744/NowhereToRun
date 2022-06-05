@@ -6,6 +6,7 @@ using UnityEngine;
 public class BasicObject : MonoBehaviour
 {
     public bool key;
+    private bool stopEverything;
 
     private Player playerScript;
     private GameManager gameManager;
@@ -14,6 +15,7 @@ public class BasicObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stopEverything = false;
         playerScript = GameObject.Find("Player").GetComponent<Player>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         audioManager = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
@@ -22,12 +24,18 @@ public class BasicObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*if (stopEverything)
+        {
+            audioManager.StopPlaying();
+            playerScript.HideInfoPanel();
+        }
+        */
     }
 
 
     private void OnPointerEnter()
     {
+        stopEverything = false;
         if (gameObject.name.Contains("cardboardBox"))
             playerScript.ShowMessage("Press A to look inside");
         else
@@ -37,6 +45,7 @@ public class BasicObject : MonoBehaviour
     private void OnPointerExit()
     {
         StopCoroutine(Looking());
+        stopEverything = true;
         audioManager.StopPlaying();
         playerScript.HideInfoPanel();
     }
@@ -77,4 +86,9 @@ public class BasicObject : MonoBehaviour
 
     }
 
+    public IEnumerator Waiting()
+    {
+        yield return new WaitForSeconds(3);
+        stopEverything = false;
+    }
 }
