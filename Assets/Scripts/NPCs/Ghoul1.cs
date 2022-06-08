@@ -35,6 +35,7 @@ public class Ghoul1 : MonoBehaviour
         ghoulAnim.Play("Idle");
     }
 
+    // Update is called once per frame
     void Update()
     {
         //se comprueba si el juego está en pausa
@@ -46,23 +47,25 @@ public class Ghoul1 : MonoBehaviour
         else
         {
             //se comprueba si el jugador está en rango
-            if (Vector3.Distance
-                (transform.position, player.transform.position) < distance2Run)
+            if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
             {
+                //el jugador es el objetivo del NPC
+                ghoulAgent.SetDestination(new Vector3(player.transform.position.x,
+                    this.transform.position.y, player.transform.position.z));
+
+
                 //se comprueba si el destino es alcanzable
                 if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial & waiting)
                 {
                     TryToOpenDoor(gameManager.keyCount);
                 }
+                if (ghoulAgent.pathStatus != NavMeshPathStatus.PathComplete)
+                {
+                    waiting = false;                //el NPC deja de estar en espera
+                    ghoulAgent.isStopped = false;   //el NPC está en movimiento
+                    ghoulAnim.Play("Walk");         //animación a reproducir
+                }
 
-                waiting = false;                //el NPC deja de estar en espera
-                ghoulAgent.isStopped = false;   //el NPC está en movimiento
-
-                //el jugador es el objetivo del NPC
-                ghoulAgent.SetDestination(new Vector3(player.transform.position.x, 
-                    this.transform.position.y, player.transform.position.z));
-                
-                ghoulAnim.Play("Walk");         //animación a reproducir
             }
             else
             {
@@ -82,9 +85,9 @@ public class Ghoul1 : MonoBehaviour
                     destination = SetWaitingPosition(); //se define nueva posición
 
                 //se comprueba si el NPC ha alcanzado el objetivo
-                if (Vector3.Distance(destination, transform.position) < 0.5 && 
-                    ghoulAgent.remainingDistance != Mathf.Infinity && 
-                    ghoulAgent.pathStatus == NavMeshPathStatus.PathComplete && 
+                if (Vector3.Distance(destination, transform.position) < 0.5 &&
+                    ghoulAgent.remainingDistance != Mathf.Infinity &&
+                    ghoulAgent.pathStatus == NavMeshPathStatus.PathComplete &&
                     ghoulAgent.remainingDistance == 0)
                 {
                     ghoulAgent.isStopped = true;       //el NPC se detiene
@@ -92,12 +95,12 @@ public class Ghoul1 : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     Vector3 SetWaitingPosition()
     {
-        int n = Random.Range(1, 4);
+        int n = Random.Range(1, 6);
 
         switch (n)
         {
@@ -116,7 +119,6 @@ public class Ghoul1 : MonoBehaviour
     public GameObject FindClosestDoor()
     {
         GameObject[] gos;
-        //lista con todos los objetos con tag Door
         gos = GameObject.FindGameObjectsWithTag("Door");
         GameObject closest = null;
         float distance = Mathf.Infinity;
@@ -140,27 +142,24 @@ public class Ghoul1 : MonoBehaviour
         int r;
         switch (difficulty)
         {
-            case 0:     //0 llaves encontradas
+            case 0:
                 break;
-            case 1:     //1 llave encontrada
-                r = Random.Range(0, 3);     //33% probabilidad
+            case 1:
+                r = Random.Range(0, 3);
                 if (r == 1)
                 {
-                    door.transform.Find("Door_Wood").
-                        GetComponent<Door>().openDoor();
+                    door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
                 }
                 break;
-            case 2:     //2 llaves encontradas
-                r = Random.Range(0, 2);     //50% probabilidad
+            case 2:
+                r = Random.Range(0, 2);
                 if (r == 1)
                 {
-                    door.transform.Find("Door_Wood").
-                        GetComponent<Door>().openDoor();
+                    door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
                 }
                 break;
-            case 3:     //3 llaves encontradas     //100% probabilidad
-                door.transform.Find("Door_Wood").
-                    GetComponent<Door>().openDoor();
+            case 3:
+                door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
                 break;
         }
     }

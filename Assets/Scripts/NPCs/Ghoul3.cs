@@ -51,20 +51,23 @@ public class Ghoul3 : MonoBehaviour
             //se comprueba si el jugador está en rango
             if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
             {
+                //el jugador es el objetivo del NPC
+                ghoulAgent.SetDestination(new Vector3(player.transform.position.x,
+                    this.transform.position.y, player.transform.position.z));
+
+                
                 //se comprueba si el destino es alcanzable
                 if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial & waiting)
                 {
                     TryToOpenDoor(gameManager.keyCount);
                 }
-
-                waiting = false;                //el NPC deja de estar en espera
-                ghoulAgent.isStopped = false;   //el NPC está en movimiento
-
-                //el jugador es el objetivo del NPC
-                ghoulAgent.SetDestination(new Vector3(player.transform.position.x,
-                    this.transform.position.y, player.transform.position.z));
-
-                ghoulAnim.Play("Walk");         //animación a reproducir
+                if (ghoulAgent.pathStatus != NavMeshPathStatus.PathComplete)
+                {
+                    waiting = false;                //el NPC deja de estar en espera
+                    ghoulAgent.isStopped = false;   //el NPC está en movimiento
+                    ghoulAnim.Play("Walk");         //animación a reproducir
+                }
+                
             }
             else
             {

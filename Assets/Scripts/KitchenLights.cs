@@ -28,7 +28,6 @@ public class KitchenLights : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         int r;
-        Debug.Log(other.tag);
         if (other.tag == "Player")
         {
             r = Random.Range(0, 5);
