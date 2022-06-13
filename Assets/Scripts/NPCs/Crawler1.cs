@@ -17,7 +17,7 @@ public class Crawler1 : MonoBehaviour
     private Vector3 destination;
 
     private bool waiting;
-    private float distance2Run = 15;
+    private float distance2Run = 20;
 
     // Start is called before the first frame update
     void Start()
