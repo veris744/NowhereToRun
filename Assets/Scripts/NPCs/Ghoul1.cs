@@ -47,12 +47,12 @@ public class Ghoul1 : MonoBehaviour
         else
         {
             //se comprueba si el jugador está en rango
-            if (Vector3.Distance(transform.position, player.transform.position) < distance2Run)
+            if (Vector3.Distance
+                (transform.position, player.transform.position) < distance2Run)
             {
                 //el jugador es el objetivo del NPC
                 ghoulAgent.SetDestination(new Vector3(player.transform.position.x,
                     this.transform.position.y, player.transform.position.z));
-
 
                 //se comprueba si el destino es alcanzable
                 if (ghoulAgent.pathStatus == NavMeshPathStatus.PathPartial & waiting)
@@ -65,7 +65,6 @@ public class Ghoul1 : MonoBehaviour
                     ghoulAgent.isStopped = false;   //el NPC está en movimiento
                     ghoulAnim.Play("Walk");         //animación a reproducir
                 }
-
             }
             else
             {
@@ -114,11 +113,13 @@ public class Ghoul1 : MonoBehaviour
         }
     }
 
+    
 
 
     public GameObject FindClosestDoor()
     {
         GameObject[] gos;
+        //lista con todos los objetos con tag Door
         gos = GameObject.FindGameObjectsWithTag("Door");
         GameObject closest = null;
         float distance = Mathf.Infinity;
@@ -142,24 +143,27 @@ public class Ghoul1 : MonoBehaviour
         int r;
         switch (difficulty)
         {
-            case 0:
+            case 0:     //0 llaves encontradas - 0% prob
                 break;
-            case 1:
-                r = Random.Range(0, 3);
+            case 1:     //1 llave encontrada
+                r = Random.Range(0, 3);     //33% prob
                 if (r == 1)
                 {
-                    door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
+                    door.transform.Find("Door_Wood").
+                        GetComponent<Door>().openDoor();
                 }
                 break;
-            case 2:
-                r = Random.Range(0, 2);
+            case 2:     //2 llaves encontradas
+                r = Random.Range(0, 2);     //50% prob
                 if (r == 1)
                 {
-                    door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
+                    door.transform.Find("Door_Wood").
+                        GetComponent<Door>().openDoor();
                 }
                 break;
-            case 3:
-                door.transform.Find("Door_Wood").GetComponent<Door>().openDoor();
+            case 3:     //3 llaves encontradas - 100% prob
+                door.transform.Find("Door_Wood").
+                    GetComponent<Door>().openDoor();
                 break;
         }
     }
